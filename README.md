@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EquipFlow
 
-## Getting Started
+EquipFlow is a full-stack equipment rental management platform built for shared equipment spaces such as media labs, studios, campus clubs, and creative teams. It helps users browse equipment, request bookings, and manage their rentals, while giving admins a dedicated dashboard to manage inventory, approve bookings, track payments, and monitor customer activity.
 
-First, run the development server:
+## Live URLs
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Update these before submission with your deployed links:
+
+- Frontend: https://equipflow-frontend.vercel.app
+- Backend API: https://equipflow-backend.vercel.app
+
+## Features
+
+- User authentication with sign up, login, email verification, and password reset
+- Public equipment catalog with featured items, category filtering, search, and detailed equipment pages
+- Booking request system with date-based availability checking to reduce double bookings
+- Role-based dashboards for users and admins
+- Admin inventory management for equipment and categories
+- Booking approval workflow with status updates such as pending, confirmed, active, returned, cancelled, and rejected
+- Stripe-based checkout flow for booking payments
+- Equipment image upload support using Cloudflare R2
+- Customer management, statistics, and review/testimonial support
+
+## Technologies Used
+
+- Frontend: Next.js 16, React 19, TypeScript, Tailwind CSS 4
+- Backend: Express.js, TypeScript
+- Database: PostgreSQL
+- ORM: Prisma
+- Authentication: Better Auth
+- Payments: Stripe
+- File Storage: Cloudflare R2 with AWS SDK
+- Email Service: Nodemailer
+- Package Manager and Tooling: pnpm, ESLint
+
+## Project Structure
+
+```text
+equip-flow-client/
+|-- frontend/
+|-- backend/
+`-- README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Instructions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Clone the repository
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/anamolhasan/equip-flow-client.git
+cd equip-flow-client
+```
 
-## Learn More
+### 2. Install dependencies
 
-To learn more about Next.js, take a look at the following resources:
+Install dependencies separately for the frontend and backend:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cd backend
+pnpm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd ../frontend
+pnpm install
+```
 
-## Deploy on Vercel
+### 3. Configure environment variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create a `backend/.env` file and add:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+PORT=5000
+DATABASE_URL=your_database_url
+DIRECT_URL=your_direct_database_url
+CLIENT_URL=http://localhost:3000
+BETTER_AUTH_SECRET=your_better_auth_secret
+BETTER_AUTH_URL=http://localhost:5000
+EMAIL=your_email_address
+EMAIL_APP_PASS=your_email_app_password
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+R2_ENDPOINT=your_r2_endpoint
+R2_BUCKET_NAME=your_r2_bucket_name
+R2_HOSTNAME=your_r2_public_hostname
+R2_ACCESS_KEY=your_r2_access_key
+R2_SECRET_ACCESS_KEY=your_r2_secret_access_key
+R2_SIGNED_URL_EXPIRY_HOUR=1
+```
+
+Create a `frontend/.env` file and add:
+
+```env
+NEXT_PUBLIC_SERVER_URL=http://localhost:5000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+R2_HOSTNAME=your_r2_public_hostname
+```
+
+### 4. Set up the database
+
+From the `backend` folder, generate Prisma client and push the schema:
+
+```bash
+cd backend
+pnpm db:push
+```
+
+### 5. Run the project locally
+
+Start the backend server:
+
+```bash
+cd backend
+pnpm dev
+```
+
+Start the frontend server in a second terminal:
+
+```bash
+cd frontend
+pnpm dev
+```
+
+### 6. Open the application
+
+Visit the frontend in your browser:
+
+```text
+http://localhost:3000
+```
+
+The backend API runs on:
+
+```text
+http://localhost:5000
+```
